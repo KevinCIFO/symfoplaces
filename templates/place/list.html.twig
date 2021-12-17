@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Catálogo de lugares{% endblock %}
+{% block main %}
+    {{ parent() }}
+    <p>Listado de lugares de <b>Symfoplaces</b></p>
+    
+    {% include '/includes/lista_lugares.html.twig' %}
+    {% 
+        include '/includes/paginator.html.twig' with
+            {
+                'route': 'lugares',
+                'entidades': 'lugares'
+            }
+    %}
+{% endblock %}

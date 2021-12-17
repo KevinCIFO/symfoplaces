@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Listado de usuarios{% endblock %}
+{% block main %}
+    {{ parent() }}
+    <p>Listado de usuarios de <b>Symfoplaces</b></p>
+    
+    {% include '/includes/lista_usuarios.html.twig' %}
+    {% 
+        include '/includes/paginator.html.twig' with
+            {
+                'route': 'usuarios',
+                'entidades': 'usuarios'
+            }
+    %}
+{% endblock %}

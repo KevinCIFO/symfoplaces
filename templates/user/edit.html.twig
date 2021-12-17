@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar usuario{% endblock %}
+
+{% block main %}
+    <h1>Modificando datos del usuario {{ usuario.nombre }}</h1>
+
+    <div class="bg-light border row align-items-center justify-content-center my-3">
+        <div class="col-8 p-4">
+            {{ form_start(formulario) }}
+                
+                {{ form_row(formulario.nombre) }}
+
+                {{ form_row(formulario.telefono) }}
+
+                {{ form_row(formulario.poblacion) }}
+
+                {{ form_row(formulario.imagen, {label: 'Foto de perfil'}) }}
+
+
+            {{ form_end(formulario) }}
+        </div>
+        <div class="col-4 text-center">
+            <figure class="my-2 p-2">
+                <img id="preview" class="rounded border movie-cover" style="max-width: 300px" alt="Foto de {{ usuario.nombre }}" title="Foto de {{ usuario.nombre }}" src="{{ usuario.imagen ? path('pic_show', {'imagen': usuario.imagen}) : path('pic_show', {'imagen': 'defaultUser.jpg'}) }}">
+                <script>
+                    document.getElementById("user_form_imagen").onchange = function(e) {
+                        if(!e.target.files[0].name.match(/\.(jpe?g|png|gif)$/i)){
+                            alert("El fomato del fichero debe ser JPG, PNG o GIF");
+                            e.target.value = '';
+                        }else{
+                            // Creamos el objeto de la clase FileReader
+                            let reader = new FileReader();
+
+                            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+                            reader.readAsDataURL(e.target.files[0]);
+
+                            // Le decimos que cuando este listo ejecute el código interno
+                            reader.onload = function(){
+                                let preview = document.getElementById("preview").src=reader.result;
+                            };
+                        }
+                    }
+                </script>
+            </figure>
+        </div>
+    </div>
+{% endblock %}

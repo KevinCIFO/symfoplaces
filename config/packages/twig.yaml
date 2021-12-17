@@ -1,0 +1,15 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        covers_directory: '%app.covers%'
+        users_directory: '%app.users_pics%'
+        paginator_links: '%app.paginator_links%'
+        entityFaker: '@App\Service\EntityFakerService'
+    form_themes: ['bootstrap_5_layout.html.twig']
+    paths:
+        '%kernel.project_dir%/public/css': styles
+        '%kernel.project_dir%/public/images': images
+
+when@test:
+    twig:
+        strict_variables: true

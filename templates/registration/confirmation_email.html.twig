@@ -1,0 +1,14 @@
+{% extends 'email.html.twig' %}
+{% block title %}Confirmación de e-mail{% endblock %}
+{% block main %}
+    <div class="m-3 p-3 bg-white">
+        <h2>Confirma tu e-mail</h2>
+
+        <p>Por favor, confirma tu dirección de e-mail haciendo clic en el siguiente enlace: </p>
+        <div class="text-center p-3 m-3">
+            <a class="btn btn-primary" href="{{ signedUrl }}">Confirma tu e-mail</a>
+        </div>
+        <p>Este enlace expirará en {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.</p>
+        <p>Gracias.</p>
+    </div>
+{% endblock %}

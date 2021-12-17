@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}Eliminar lugar{% endblock %}
+{% block main %}
+    {{ parent() }}
+    <div class="bg-light border row align-items-center justify-content-center my-3">
+        <div class="col-6 p-4">
+            <p>¿Estás seguro de eliminar el lugar <b>{{ lugar.nombre }}</b>?</p>
+            <p>Pulsa <b>confirmar</b> para continuar</p>
+
+            {{ form(formulario) }}
+        </div>
+        <div class="col-6 text-center bg-light">
+            <figure class="p-2">
+                {% set foto = (lugar.getPhotos()|length) > 0 ? lugar.getPhotos().get(0).getRuta():'default.jpg' %}
+                <img class="rounded" style="width: 500px" alt="Imagen de {{ lugar.nombre }}" title="Imagen de {{ lugar.nombre }}" src="{{ asset(covers_directory ~ '/' ~ (foto ?? 'default.jpg')) }}">
+            </figure>
+        </div>
+    </div>
+{% endblock %}

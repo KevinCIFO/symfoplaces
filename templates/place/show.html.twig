@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block title %}Detalles del lugar {% endblock %}
+{% block main %}
+    {{ parent() }}
+    <h2>{{ lugar.nombre }}</h2>
+
+    <div class="border row align-items-center justify-content-center my-3" style="width: 100%; margin-left: 0.5px;">
+        <div class="col my-3 p-3 text-start">
+            <p><b>ID</b>: {{ lugar.id }}</p>
+            <p><b>Nombre</b>: {{ lugar.nombre }}</p>
+            <p><b>Descripción</b>: {{ lugar.descripcion }}</p>
+            <p><b>Valoración</b>: {% if lugar.valoracion != NULL %}
+                                    {% for i in 1..5 %}
+                                        {% if i <= lugar.valoracion %}
+                                            <img height="25" width="25" alt="{{ lugar.valoracion }}/5" title="{{ lugar.valoracion }}/5" src="{{ asset('images/samples/estrellaon.gif') }}">
+                                        {% else %}
+                                            <img height="25" width="25" alt="{{ lugar.valoracion }}/5" title="{{ lugar.valoracion }}/5" src="{{ asset('images/samples/estrellaoff.gif') }}">
+                                        {% endif %}
+                                    {% endfor %}
+                                  {% else %}
+                                      <p>Sin valorar</p>
+                                  {% endif %}
+            </p>
+            <p><b>País</b>: {{ lugar.pais }}</p>
+            <p><b>Tipo de lugar</b>: {{ lugar.tipo }}</p>
+            {% if lugar.getUser() %}
+                <p>Lugar añadido por el usuario <b>{{ lugar.getUser().nombre }}</b></p>
+            {% endif %}
+        </div>
+        <div class="col my-3 p-3 text-center">
+            {% set foto = (lugar.getPhotos()|length) > 0 ? lugar.getPhotos().get(0).getRuta():'default.jpg' %}
+            <img class="rounded" style="width: 500px" alt="Imagen de {{ lugar.nombre }}" title="Imagen de {{ lugar.nombre }}" src="{{ asset(covers_directory ~ '/' ~ (foto ?? 'default.jpg')) }}">
+        </div>
+    </div>
+    
+    <div class="border my-3 p-3" style="width: 100%;">
+        {% if lugar.getPhotos()|length > 0 %}
+            <h2>Fotos del lugar</h2>
+            {% set fotos = lugar.getPhotos() %}
+            {% include '/includes/fotos_lugares.html.twig' %}
+        {% endif %}
+    </div>
+
+    <div class="border my-3 p-3" style="width: 100%;">
+        <h2>Comentarios</h2>
+        {% if lugar.getComments()|length > 0 %}
+            {% set comentarios = lugar.getComments() %}
+            {% include '/includes/comentarios_lugares.html.twig' %}
+        {% endif %}
+        {% if is_granted('create', entityFaker.getMock('Comment')) %}
+            {{ form(formularioAddComment) }}
+        {% endif %}
+    </div>
+
+    <div class="text_center">
+        <a href="{{ path('lugares') }}">
+            <img height="20" width="20" alt="Lista de lugares" title="Lista de lugares" src="{{ asset('/images/buttons/list.png') }}">
+        </a>
+        {% if is_granted('edit', lugar) %}
+        <a href="{{ path('lugar_update', {'id':lugar.id}) }}">
+            <img height="20" width="20" alt="Editar" title="Editar" src="{{ asset('/images/buttons/update.png') }}">
+        </a>
+        {% endif %}
+        {% if is_granted('delete', lugar) %}
+        <a href="{{ path('lugar_delete', {'id':lugar.id}) }}">
+            <img height="20" width="20" alt="Eliminar" title="Eliminar" src="{{ asset('/images/buttons/delete.png') }}">
+        </a>
+        {% endif %}
+    </div>
+{% endblock %}

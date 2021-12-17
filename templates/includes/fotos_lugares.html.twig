@@ -1,0 +1,52 @@
+<style>
+    .imagebox {
+        padding: 0px;
+        position: relative;
+        text-align: center;
+        width: 100%;
+        border-radius: 5%;
+        border: 2px solid black;
+    }
+
+    .imagebox .titulo {
+        background-color: rgba(0, 0, 0, 0.6);
+        bottom: 0px;
+        color: white;
+        font-size: 0.8em;
+        left: 0px;
+        padding: 10px 15px;
+        position: absolute;
+        transition: 0.5s padding;
+        text-align: center;
+        width: 100%;
+        border-bottom-left-radius: 10px 10px;
+        border-bottom-right-radius: 10px 10px;
+    } 
+
+    .imagebox:hover .titulo {
+        padding-bottom: 10%;
+    }
+
+    .imagen {
+        border-radius: 5%;
+        width: 300px;
+        height: 200px;
+    }
+</style>
+
+<div class="d-flex flex-wrap">
+    {% for foto in fotos %}
+        <figure class="m-2">
+            <div class="imagebox">
+                <img class="imagen" alt="Imagen de {{ lugar.nombre }}" title="Imagen de {{ lugar.nombre }}" src="{{ asset(covers_directory ~ '/' ~ (foto.ruta ?? 'default.jpg')) }}">
+                <span class="titulo">{{ foto.titulo }}</span>
+            </div>
+            <div>
+                {% if is_granted('edit', foto) %}
+                    <a class="nav-link" style="float:left" href="{{ path('photo_update', {'id':foto.id}) }}">Editar</a>
+                    <a class="nav-link" style="float:right" href="{{ path('lugar_remove_photo', {'id':foto.id}) }}">Borrar</a>
+                {% endif %}
+            </div>
+        </figure>
+    {% endfor %}
+</div>

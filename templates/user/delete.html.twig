@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Eliminar usuario{% endblock %}
+{% block main %}
+    {{ parent() }}
+
+    <div class="bg-light border row align-items-center justify-content-center my-3">
+        <div class="col-6 p-4">
+            <p>¿Estás seguro de eliminar al usuario <b>{{ usuario.nombre }}</b>?</p>
+            <p>Pulsa <b>confirmar</b> para continuar</p>
+
+            {{ form(formulario) }}
+        </div>
+        <div class="col-6 text-center bg-light">
+            <figure class="p-2">
+                <img class="rounded border movie-cover" style="max-width: 240px" alt="Imagen de {{ usuario.nombre }}" title="Imagen de {{ usuario.nombre }}" src="{{ usuario.imagen ? path('pic_show', {'imagen': usuario.imagen}) : path('pic_show', {'imagen': 'defaultUser.jpg'}) }}">
+            </figure>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{{ path('home') }}">
+            <img height="40" width="40" src="{{ asset('images/buttons/home.png') }}" alt="Volver a home" title="Volver a home">
+        </a>
+    </div>
+{% endblock %}

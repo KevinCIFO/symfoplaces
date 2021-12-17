@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Información del usuario{% endblock %}
+
+{% block main %}
+    {{ parent() }}
+    <h2>{{ usuario.nombre }}</h2>
+
+    <div class="border row align-items-center justify-content-center my-3">
+        <div class="col m-3 p-3 text-start">
+            <div class="my-2 p-2">
+                <p><b>ID:</b> {{ usuario.id }}</p>
+                <p><b>Nombre:</b> {{ usuario.nombre }}</p>
+                <p><b>E-mail:</b> {{ usuario.email }}</p>
+                <p><b>Teléfono:</b> {{ usuario.telefono }}</p>
+                <p><b>Población:</b> {{ usuario.poblacion }}</p>
+                <p><b>Rol actual:</b>
+                    {% for rol in usuario.roles %}
+                        {{ rol }} 
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="col m-3 p-3 text-center">
+            <img class="rounded border movie-cover" style="max-width: 240px" alt="Foto de {{ usuario.nombre }}" title="Foto de {{ usuario.nombre }}" src="{{ usuario.imagen ? path('pic_show', {'imagen': usuario.imagen}) : path('pic_show', {'imagen': 'defaultUser.jpg'}) }}">
+        </div>
+    </div>
+    <div class="text_center">
+        <a href="{{ path('usuarios') }}">
+            <img height="20" width="20" alt="Lista de usuarios" title="Lista de usuarios" src="{{ asset('/images/buttons/list.png') }}">
+        </a>
+        {% if is_granted('edit', usuario) %}
+        <a href="{{ path('user_edit', {'id':usuario.id}) }}">
+            <img height="20" width="20" alt="Editar" title="Editar" src="{{ asset('/images/buttons/update.png') }}">
+        </a>
+        {% endif %}
+        {% if is_granted('delete', usuario) %}
+        <a href="#">
+            <img height="20" width="20" alt="Eliminar" title="Eliminar" src="{{ asset('/images/buttons/delete.png') }}">
+        </a>
+        {% endif %}
+    </div>
+{% endblock %}

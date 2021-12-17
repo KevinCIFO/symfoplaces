@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Contacto{% endblock %}
+{% block main %}
+    {{ parent() }}
+    <p>Contacta con <b>Symfoplaces</b>.</p>
+    <div class="border row my-2 p-2">
+        <div class="col-8 p-2">
+            <h3>Contactar</h3>
+            {{ form(formulario) }}
+        </div>
+        <div class="col-4 p-2 text-end">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2991.376987059963!2d2.140736415727923!3d41.431041001250136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a497fcdf17c63b%3A0x36b7d49977028d76!2sPla%20de%20Montbau%2C%2008035%20Barcelona!5e0!3m2!1ses!2ses!4v1636110197260!5m2!1ses!2ses" 
+                style="border: 0; width: 100%; min-height:350px" allowfullscreen loading="lazy">
+            </iframe>
+            </iframe>
+            <p><b>CIFO La Violeta</b></p>
+            <p>Carrer del Comte de Sert, 7, 08035 Barcelona</p>
+            <p>Aula I12 (Curs de Symfony)</p>
+            <p>tel: 932 54 17 00</p>
+        </div>
+    </div>
+{% endblock %}

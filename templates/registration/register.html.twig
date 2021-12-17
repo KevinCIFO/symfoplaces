@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro de usuario{% endblock %}
+
+{% block main %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+    <h1>Registro de usuario</h1>
+
+    <div class="bg-light border row align-items-center justify-content-center my-3">
+        <div class="col-8 p-4">
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                
+                {{ form_row(registrationForm.nombre, {label: 'Nombre'}) }}
+                
+                {{ form_row(registrationForm.plainPassword, {label: 'Contraseña'}) }}
+
+                {{ form_row(registrationForm.telefono, {label: 'Teléfono'}) }}
+
+                {{ form_row(registrationForm.poblacion, {label: 'Población'}) }}
+
+                {{ form_row(registrationForm.imagen, {label: 'Foto de perfil'}) }}
+                <h3 class="mt-3">Términos y condiciones</h3>
+                <p>Este es un ejemplo de clase y los datos que introduzcas aquí no serán tratados con ningún tipo de fin comercial.</p>
+                <p>Las únicas notificaciones que recibirás al e-mail son las de verificar tu e-mail y olvidaste tu contraseña.</p>
+
+                <div class="text-center">
+                    {{ form_row(registrationForm.agreeTerms, {
+                        label: 'Acepto los términos'
+                    }) }}
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+        <div class="col-4 text-center">
+            <figure class="my-2 p-2">
+                <img id="preview" class="rounded border movie-cover" style="max-width: 500px" alt="Imagen por defecto" title="Imagen por defecto" src="{{ asset(covers_directory ~ '/' ~ (user.imagen ?? 'defaultUser.jpg')) }}">
+                <script>
+                    document.getElementById("registration_form_imagen").onchange = function(e) {
+                        if(!e.target.files[0].name.match(/\.(jpe?g|png|gif)$/i)){
+                            alert("El fomato del fichero debe ser JPG, PNG o GIF");
+                            e.target.value = '';
+                        }else{
+                            // Creamos el objeto de la clase FileReader
+                            let reader = new FileReader();
+
+                            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+                            reader.readAsDataURL(e.target.files[0]);
+
+                            // Le decimos que cuando este listo ejecute el código interno
+                            reader.onload = function(){
+                                let preview = document.getElementById("preview").src=reader.result;
+                            };
+                        }
+                    }
+                </script>
+            </figure>
+        </div>
+    </div>
+{% endblock %}

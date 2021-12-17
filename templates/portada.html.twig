@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block title %}Portada{% endblock %}
+{% block main %}
+    {{ parent() }}
+    <h4 style="margin-left: 1%">Lugares añadidos recientemente en <b>Symfoplaces</b></h4>
+
+    <style>
+        .imagebox {
+            padding: 0px;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            border-radius: 5%;
+            border: 2px solid black;
+        }
+
+        .imagebox .nombre {
+            background-color: rgba(0, 0, 0, 0.6);
+            bottom: 0px;
+            color: white;
+            font-size: 1.2em;
+            left: 0px;
+            padding: 10px 15px;
+            position: absolute;
+            transition: 0.5s padding;
+            text-align: center;
+            width: 100%;
+            border-bottom-left-radius: 5px 10px;
+            border-bottom-right-radius: 5px 10px;
+        }
+
+        .imagebox .pais {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 1.2em;
+            padding: 10px 15px;
+            position: absolute;
+            margin-left: 65%;
+            margin-top: 5%;
+            border-radius: 10%;
+        }   
+
+        .imagebox:hover .nombre {
+            padding-bottom: 10%;
+        }
+
+        .imagen {
+            border-radius: 4%;
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+
+    <div class="d-flex flex-wrap">
+        {% for lugar in lugares %}
+            <figure class="m-2">
+                <div class="imagebox">
+                    <a href="{{ path('lugar_show', {'id':lugar.id}) }}">
+                        <span class="pais">{{ lugar.pais }}</span>
+                        {% set foto = (lugar.getPhotos()|length) > 0 ? lugar.getPhotos().get(0).getRuta():'default.jpg' %}
+                        <img class="imagen" alt="Imagen de {{ lugar.nombre }}" title="Imagen de {{ lugar.nombre }}" src="{{ asset(covers_directory ~ '/' ~ (foto ?? 'default.jpg')) }}">
+                        <span class="nombre">{{ lugar.nombre }}</span>
+                    </a>
+                </div>
+            </figure>
+        {% endfor %}
+        {# <figure class="m-2">
+            <img width="426" height="240" alt="barcelona" src="/images/template/barcelona.jpg">
+        </figure>
+        <figure class="m-2">
+            <img width="426" height="240" alt="paris" src="/images/template/paris.jpg">
+        </figure>
+        <figure class="m-2">
+            <img width="426" height="240" alt="lima" src="/images/template/lima.jpg">
+        </figure> #}
+    </div>
+    {% 
+        include '/includes/paginatorPortada.html.twig' with
+            {
+                'route': 'portada',
+                'entidades': 'lugares'
+            }
+    %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comprobar tu e-mail{% endblock %}
+
+{% block main %}
+    {{ parent() }}
+
+    <h2>E-mail enviado</h2>
+    <div class="alert alert-success p-3">
+        Si existe una cuenta asociada al e-mail indicado, entonces recibirás un correo con el enlace para cambiar tu contraseña.
+    </div>
+    <div class="p-3">
+        <p>Este enlace expirará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+        <p>Si no recibes ningún e-mail, revisa tu carpeta de spam o <a href="{{ path('app_forgot_password_request') }}">inténtalo otra vez</a>.</p>
+    </div>
+{% endblock %}

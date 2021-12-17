@@ -1,0 +1,29 @@
+{% apply inline_css(source(
+    '@styles/app.css',
+    '@styles/bootstrap.min.css',
+    '@styles/estilo.css'
+)) %}
+
+    {% block header %}
+    <header class="row border bg-light">
+        <div class="col-8 pl-3 p-3">
+            <hgroup>
+                <h1>Symfoplaces</h1>
+                <h2>Página de lugares</h2>
+            </hgroup>
+        </div>
+    </header>
+    {% endblock %}
+
+    <main class="my-5 p-4 bg-white">
+        {% block main %}
+        {% endblock %}
+    </main>
+
+    {% block footer %}
+    <footer class="page-footer p-2 bg-light border row" style="font-size: 0.8rem;">
+        <p>Aplicación creada por <b>Kevin</b> como ejemplo de clase.</p>
+        <p>Desarrollada haciendo uso de <b>Symfony</b> y <b>Bootstrap</b>.</p>
+    </footer>
+    {% endblock %}
+{% endapply %}

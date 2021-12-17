@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %} - Symfoplaces</title>
+
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="shortcut icon" type="image/jpg" href="{{ asset('/images/template/logo.jpg') }}">
+    {% endblock %}
+    </head>
+    <body class="container p-3">
+    {% block body %}
+        {% block login %}
+            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                <div class="my-1 text-end">
+                    <a href="{{ path('home') }}">
+                        {{ app.user.nombre }}
+                        <span style="font-size: 0.8em">({{ app.user.email }})</span>
+                    </a>
+                    {% if is_granted('read', entityFaker.getMock('User')) %}
+                    -
+                    <a href="{{ path('usuarios') }}">Lista de usuarios</a>
+                    {% endif %}
+                    -
+                    <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% else %}
+                <div class="my-1" style="display: flex; padding-left: 80%;">
+                    <a style="vertical-align: middle" class="nav-link" href="{{ path('app_login') }}">Acceder
+                        <img src="{{ asset('images/buttons/login.png') }}" alt="login" height="25" width="25">
+                    </a>
+                    <a style="vertical-align: middle" class="nav-link" href="{{ path('app_register') }}">Registrarse
+                        <img src="{{ asset('images/buttons/register.png') }}" alt="register" height="25" width="25">
+                    </a>
+                </div>
+            {% endif %}
+        {% endblock %}
+        {% block header %}
+        <header class="d-flex">
+            <div class="col-8">
+                <hgroup>
+                    <h1>Symfoplaces</h1>
+                    <h2>Página de lugares</h2>
+                </hgroup>
+            </div>
+            <figure class="col-4 text-end">
+                <a href="/">
+                    <img width="150" alt="logo" src="{{ asset('/images/template/logo.jpg') }}">
+                </a>
+            </figure>
+        </header>
+        {% endblock %}
+
+        {% block nav %}
+        <div class="d-flex">
+            <nav class="col-10">
+                <ul class="nav nav-pills">
+                    <li class="nav-item mr-2">
+                        <a class="btn btn-primary" href="{{ path('portada') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="btn btn-primary" href="{{ path('lugares') }}">Lista de lugares</a>
+                    </li>
+                    {% if is_granted('create', entityFaker.getMock('Place')) %}
+                    <li class="nav-item mr-2">
+                        <a class="btn btn-primary" href="{{ path('lugar_create') }}">Nuevo lugar</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item mr-2">
+                        <a class="btn btn-primary" href="{{ path('lugar_search') }}">Buscar lugar</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <a class="btn btn-primary" href="{{ path('contacto') }}">Contacto</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col-2 pt-2 text-end">
+                {{ "now"|date('d/m/Y H:i', timezone="Europe/Madrid") }}
+            </div>
+        </div>
+        {% endblock %}
+
+        <main class="my-3">
+        {% block main %}
+            {% block success %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endblock %}
+        </main>
+
+        {% block footer %}
+        <footer>
+            <p>Symfoplaces - Desarrollado con <b>Symfony</b> y <b>Bootstrap</b>. Todos los derechos reservados.</p>
+        </footer>
+        {% endblock %}
+    {% endblock %}
+    </body>
+</html>

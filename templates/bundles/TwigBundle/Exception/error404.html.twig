@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <h1>Page not found</h1>
+    <h2>Error 404</h2>
+
+    <p>Recurso no encontrado. Está página no existe.</p>
+
+    <div class="row align-items-center text-center">
+        <figure class="col-6 offset-3">
+            <img class="img-fluid" src="{{ asset('images/errors/404.png') }}">
+        </figure>
+    </div>
+
+    <p>Para más información, contacta con el administrador haciendo uso del <a href="{{ path('contacto') }}">formulario de contacto.</a></p>
+{% endblock %}

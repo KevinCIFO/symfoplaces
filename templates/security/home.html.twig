@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Página de inicio de {{ app.user.nombre }}{% endblock %}
+
+{% block main %}
+    {{ parent() }}
+    <h2>Página de inicio de {{ app.user.nombre }}</h2>
+    <p>Esta es tu información de usuario</p>
+
+    {% if not app.user.isVerified %}
+        <div class="row alert alert-danger p-2" role="alert">
+            <p>La dirección de e-mail {{ app.user.email }}<b> no ha sido verificada</b>.
+            Por favor, haz clic <a href="{{ path('resend_verification') }}">aquí</a> para completar el proceso de registro y poder acceder a todas las funcionalidades de Symfoplaces.</p>
+        </div>
+    {% endif %}
+
+    <div class="bg-light border row align-items-center justify-content-center my-3">
+        <div class="col m-3 p-3 text-start">
+            <div class="my-2 p-2">
+                <h2>Datos:</h2>
+                <p><b>ID:</b> {{ app.user.id }}</p>
+                <p><b>Nombre:</b> {{ app.user.nombre }}</p>
+                <p><b>E-mail:</b> {{ app.user.email }}</p>
+                <p><b>Teléfono:</b> {{ app.user.telefono }}</p>
+                <p><b>Población:</b> {{ app.user.poblacion }}</p>
+            </div>
+            <div class="my-2 p-2">
+                <h3>Operaciones</h3>
+                <ul>
+                    <li><a href="{{ path('user_edit', {'id':app.user.id}) }}">Modificar mis datos</a></li>
+                    <li><a href="{{ path('unsubscribe') }}">Baja de usuario</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col m-3 p-3 text-center bg-light">
+            <img class="rounded border movie-cover" style="max-width: 240px" alt="Foto de {{ app.user.nombre }}" title="Foto de {{ app.user.nombre }}" src="{{ app.user.imagen ? path('pic_show', {'imagen': app.user.imagen}) : path('pic_show', {'imagen': 'defaultUser.jpg'}) }}">
+        </div>
+    </div>
+    <div class="bg-light border row align-items-center justify-content-center my-3 p-4">
+        <h2>Aportaciones</h2>
+        {% set lugares = app.user.getPlaces() %}
+        {% include '/includes/lista_lugares.html.twig' %}
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<div class="row align-items-center justify-content-center my-3" style="width: 100%;">
+    {% for comentario in comentarios %}
+        <div style="display: flex;">
+            {% if comentario.getUser() == NULL %}
+                <p style="padding-right: 0.6%; padding-top: 0.6%;"><b>Anónimo</b></p>    
+            {% else %}
+                <p style="padding-right: 0.6%; padding-top: 0.6%;"><b>{{ comentario.getUser().getNombre() }}</b></p>
+            {% endif %}
+            {% if is_granted('delete', comentario) %}
+                <a class="nav-link" href="{{ path('lugar_remove_comment', {'id':comentario.id}) }}">Eliminar comentario</a>
+            {% endif %}
+        </div>
+        <p>{{ comentario.texto }}</p>
+    {% endfor %}
+</div>
