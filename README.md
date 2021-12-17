@@ -1,5 +1,5 @@
 <p align="center">
-<img src="public/images/template/logo.jpg" width="150">
+<img src="public/images/template/logo.jpg" width="300">
 </p>
 
 # Symfoplaces - Página de lugares
